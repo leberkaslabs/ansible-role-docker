@@ -1,0 +1,32 @@
+---
+# The base URL for the Docker repository.
+# This URL points to the official Docker repository for Linux distributions.
+docker_repo_url: https://download.docker.com/linux
+
+# The filename used for the Docker repository.
+# This is the name of the repository file used for configuring the repository on the system
+docker_repository_filename: docker
+
+# The Docker repository configuration for Red Hat-based distributions.
+# This condition determines the appropriate repository configuration based on the OS family.
+docker_repository_dnf_distribution: "{{ 'rhel' if ansible_facts.os_family == 'RedHat' else ansible_facts.distribution | lower }}"
+
+# Full URL for the Docker DNF repository configuration file for the determined distribution.
+# It dynamically creates the URL path based on the OS family and repository filename.
+docker_dnf_repository: "{{ docker_repo_url ~ '/' ~ docker_repository_dnf_distribution ~ '/docker-ce.repo' }}"
+
+# The Docker repository configuration for Debian-based distributions.
+# This sets the repository for the corresponding distribution, based on the system's facts.
+docker_repository_apt_distribution: "{{ ansible_facts.distribution | lower }}"
+
+# The release version of the distribution, used for creating the repository URL.
+# This helps to point to the correct Docker repository for the specific release version.
+docker_repository_apt_distribution_release: "{{ ansible_facts.distribution_release }}"
+
+# Full URL for the Docker APT repository, constructed using the distribution name.
+# The URL points to the location where the APT repository metadata is hosted.
+docker_apt_repository: "{{ docker_repo_url ~ '/' ~ docker_repository_apt_distribution }}"
+
+# The GPG key URL for the Docker APT repository.
+# This URL is used for verifying the authenticity of the Docker packages in the APT repository.
+docker_apt_gpg_key: "{{ docker_repo_url ~ '/' ~  docker_repository_apt_distribution ~ '/gpg' }}"

@@ -1,0 +1,39 @@
+---
+argument_specs:
+  main:
+    short_description: docker
+    description: Install Docker Engine.
+    author: dudecalledbro
+    options:
+      docker_repo_url:
+        type: str
+        required: true
+        description: The base URL for the Docker repository.
+      docker_repository_filename:
+        type: str
+        required: true
+        description: The filename used for the Docker repository.
+      docker_repository_dnf_distribution:
+        type: str
+        required: true
+        description: The Docker repository configuration for Red Hat-based distributions.
+      docker_dnf_repository:
+        type: str
+        required: true
+        description: Full URL for the Docker DNF repository configuration file for the determined distribution.
+      docker_repository_apt_distribution:
+        type: str
+        required: true
+        description: The Docker repository configuration for Debian-based distributions.
+      docker_repository_apt_distribution_release:
+        type: str
+        required: true
+        description: The release version of the distribution, used for creating the repository URL.
+      docker_apt_repository:
+        type: str
+        required: true
+        description: Full URL for the Docker APT repository, constructed using the distribution name.
+      docker_apt_gpg_key:
+        type: str
+        required: true
+        description: The GPG key URL for the Docker APT repository.

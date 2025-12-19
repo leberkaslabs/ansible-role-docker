@@ -1,0 +1,61 @@
+---
+- name: Setup the Docker repository
+  ansible.builtin.include_tasks:
+    file: "{{ 'setup_' ~ ansible_facts.os_family | lower ~ '.yml' }}"
+
+- name: Install the Docker packages
+  ansible.builtin.package:
+    name:
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-ce
+      - docker-ce-cli
+      - docker-compose-plugin
+    update_cache: true
+    state: present
+
+- name: Generate Docker Bash completion script
+  ansible.builtin.command:
+    cmd: docker completion bash
+  register: docker_completion_bash
+  changed_when: false
+
+- name: Create Docker Bash completion script
+  ansible.builtin.copy:
+    content: "{{ docker_completion_bash.stdout }}"
+    dest: /etc/bash_completion.d/docker
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Ensure the Docker configuration directory exists
+  ansible.builtin.file:
+    path: /etc/docker
+    owner: root
+    group: root
+    mode: "0755"
+    state: directory
+
+- name: Deploy custom Docker daemon configuration (if defined)
+  ansible.builtin.copy:
+    content: "{{ docker_daemon_options | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart docker
+  when: docker_daemon_options is defined and docker_daemon_options | length > 0
+
+- name: Ensure compatibility with Docker Compose by creating a symlink
+  ansible.builtin.file:
+    src: /usr/libexec/docker/cli-plugins/docker-compose
+    dest: /usr/bin/docker-compose
+    owner: root
+    group: root
+    state: link
+
+- name: Ensure Docker service is enabled and running
+  ansible.builtin.systemd_service:
+    name: docker
+    enabled: true
+    state: started

@@ -1,0 +1,15 @@
+---
+- name: Install the Docker requirements
+  ansible.builtin.dnf:
+    name:
+      - bash-completion
+      - dnf-plugins-core
+    state: present
+
+- name: Setup the Docker DNF repository
+  ansible.builtin.get_url:
+    url: "{{ docker_dnf_repository }}"
+    dest: "/etc/yum.repos.d/{{ docker_repository_filename }}.repo"
+    owner: root
+    group: root
+    mode: "0644"
