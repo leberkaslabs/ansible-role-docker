@@ -5,8 +5,7 @@ driver:
   name: docker
 platforms:
   - name: instance
-    # Example "dudecalledbro/molecule-debian-12:latest"
-    # image: "${NAMESPACE:-dudecalledbro}/${IMAGE:-molecule-debian-12}:${TAG:-latest}"
+    # Example "dudecalledbro/molecule-rockylinux-9:latest"
     image: "${NAMESPACE:-dudecalledbro}/${IMAGE:-molecule-rockylinux-9}:${TAG:-latest}"
     command: ""
     volumes:
