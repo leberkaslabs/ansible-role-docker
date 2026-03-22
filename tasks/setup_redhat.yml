@@ -9,6 +9,7 @@
 - name: Setup the Docker DNF repository
   ansible.builtin.get_url:
     url: "{{ docker_dnf_repository }}"
+    # yamllint disable-line rule:quoted-strings
     dest: "/etc/yum.repos.d/{{ docker_repository_filename }}.repo"
     owner: root
     group: root

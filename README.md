@@ -1,4 +1,4 @@
-# Ansible Role: Docker
+# Ansible Role: docker
 
 [![Ansible Molecule](https://github.com/leberkaslabs/ansible-role-docker/actions/workflows/molecule.yml/badge.svg)](https://github.com/leberkaslabs/ansible-role-docker/actions/workflows/molecule.yml)
 
@@ -16,11 +16,9 @@ The default values for the variables are set in [defaults/main.yml](defaults/mai
 ```yaml
 - hosts: all
   roles:
-    - role: dudecalledbro.docker
+    - role: leberkaslabs.docker
 ```
 
 ## License
 
-Copyright © 2025 Niclas Spreng
-
-Licensed under the [MIT license](LICENSE).
+Copyright (c) 2026 Niclas Spreng

@@ -1,9 +1,9 @@
 ---
 argument_specs:
   main:
-    short_description: docker
+    author: Niclas Spreng
     description: Install Docker Engine.
-    author: dudecalledbro
+    short_description: docker
     options:
       docker_repo_url:
         type: str
